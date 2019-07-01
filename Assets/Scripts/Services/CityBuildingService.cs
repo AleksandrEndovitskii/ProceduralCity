@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public class CityBuildingService : MonoBehaviour
+    public class CityBuildingService
     {
         public void Initialize()
         {

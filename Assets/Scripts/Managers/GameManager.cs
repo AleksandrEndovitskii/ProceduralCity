@@ -21,9 +21,7 @@ namespace Managers
         [NonSerialized]
         public BuildingsManager BuildingsManager;
 
-        [NonSerialized]
         public BuildingsFactory BuildingsFactory;
-        [NonSerialized]
         public CityBuildingService CityBuildingService;
 
         private void Awake()
