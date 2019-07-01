@@ -1,5 +1,6 @@
 ﻿using System;
 using Managers.ResourcesManagers;
+using Services;
 using UnityEngine;
 
 namespace Managers
@@ -14,6 +15,8 @@ namespace Managers
 
         [NonSerialized]
         public BuildingsManager BuildingsManagerInstance;
+
+        public CityBuildingService CityBuildingService;
 
         private void Awake()
         {
@@ -39,6 +42,9 @@ namespace Managers
         {
             BuildingsManagerInstance = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
             BuildingsManagerInstance.Initialize("Buildings");
+
+            // start point
+            CityBuildingService.Initialize();
         }
     }
 }
