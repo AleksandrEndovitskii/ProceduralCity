@@ -1,11 +1,18 @@
-﻿using UnityEngine;
+﻿using Managers.ResourcesManagers;
+using UnityEngine;
 
 namespace Managers
 {
+    [RequireComponent(typeof(BuildingsManager))]
     public class GameManager : MonoBehaviour
     {
         // static instance of GameManager which allows it to be accessed by any other script 
         public static GameManager Instance;
+
+        public BuildingsManager BuildingsManager
+        {
+            get { return this.gameObject.GetComponent<BuildingsManager>(); }
+        }
 
         private void Awake()
         {
@@ -29,7 +36,7 @@ namespace Managers
 
         public void Initialize()
         {
-            //
+            BuildingsManager.Initialize("Buildings");
         }
     }
 }
