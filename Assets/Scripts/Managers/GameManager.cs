@@ -14,7 +14,7 @@ namespace Managers
         private BuildingsManager _buildingsManagerPrefab;
 
         [NonSerialized]
-        public BuildingsManager BuildingsManagerInstance;
+        public BuildingsManager BuildingsManager;
 
         public CityBuildingService CityBuildingService;
 
@@ -40,8 +40,8 @@ namespace Managers
 
         public void Initialize()
         {
-            BuildingsManagerInstance = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
-            BuildingsManagerInstance.Initialize("Buildings");
+            BuildingsManager = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
+            BuildingsManager.Initialize("Buildings");
 
             // start point
             CityBuildingService.Initialize();
