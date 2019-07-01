@@ -45,5 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windowsCanvasPrefab: {fileID: 5981529892584091618, guid: fa5d06d0ed725d64ab7cb03fd789b620,
     type: 3}
+  _countersContainerPrefab: {fileID: 856095122750748763, guid: 697d6918eb9c57b4c98ae223f772843a,
+    type: 3}
   _counterTMPTextPrefab: {fileID: 8272057044552431467, guid: 351bc44aa0675f54ba19c023248e4084,
     type: 3}
