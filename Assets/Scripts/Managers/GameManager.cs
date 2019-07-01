@@ -12,8 +12,12 @@ namespace Managers
         public static GameManager Instance;
 
         [SerializeField]
+        private GameObjectsManager _gameObjectsManagerPrefab;
+        [SerializeField]
         private BuildingsManager _buildingsManagerPrefab;
 
+        [NonSerialized]
+        public GameObjectsManager GameObjectsManager;
         [NonSerialized]
         public BuildingsManager BuildingsManager;
 
@@ -43,6 +47,8 @@ namespace Managers
 
         public void Initialize()
         {
+            GameObjectsManager = Instantiate(_gameObjectsManagerPrefab, this.gameObject.transform);
+            GameObjectsManager.Initialize();
             BuildingsManager = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
             BuildingsManager.Initialize("Buildings");
 
