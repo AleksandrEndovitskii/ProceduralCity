@@ -7,10 +7,16 @@ namespace Services
 {
     public class CityBuildingService
     {
+        public Action<List<GameObject>> InstancesCreated = delegate { };
+
+        private List<GameObject> _instances = new List<GameObject>();
+
         public void Initialize()
         {
             // demo implementation
-            var instances = Create(100, 100, 2);
+            _instances = Create(100, 100, 2);
+
+            InstancesCreated.Invoke(_instances);
         }
 
         public List<GameObject> Create(int length, int width, int spacing)
