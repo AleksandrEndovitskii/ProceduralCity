@@ -53,16 +53,16 @@ namespace Managers
             GameObjectsManager = Instantiate(_gameObjectsManagerPrefab, this.gameObject.transform);
             GameObjectsManager.Initialize();
             UserInterfaceManager = Instantiate(_userInterfaceManagerPrefab, this.gameObject.transform);
-            UserInterfaceManager.Initialize();
             BuildingsManager = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
             BuildingsManager.Initialize("Buildings");
 
             BuildingsFactory = new BuildingsFactory();
             BuildingsFactory.Initialize();
 
-            // start point
             CityBuildingService = new CityBuildingService();
-            CityBuildingService.Initialize();
+            // user interface need spawned buildings from city building service
+            UserInterfaceManager.Initialize();
+            CityBuildingService.Initialize(); // start point
         }
     }
 }
