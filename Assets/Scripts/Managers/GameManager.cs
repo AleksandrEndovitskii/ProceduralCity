@@ -1,18 +1,19 @@
-﻿using Managers.ResourcesManagers;
+﻿using System;
+using Managers.ResourcesManagers;
 using UnityEngine;
 
 namespace Managers
 {
-    [RequireComponent(typeof(BuildingsManager))]
     public class GameManager : MonoBehaviour
     {
         // static instance of GameManager which allows it to be accessed by any other script 
         public static GameManager Instance;
 
-        public BuildingsManager BuildingsManager
-        {
-            get { return this.gameObject.GetComponent<BuildingsManager>(); }
-        }
+        [SerializeField]
+        private BuildingsManager _buildingsManagerPrefab;
+
+        [NonSerialized]
+        public BuildingsManager BuildingsManagerInstance;
 
         private void Awake()
         {
@@ -36,7 +37,8 @@ namespace Managers
 
         public void Initialize()
         {
-            BuildingsManager.Initialize("Buildings");
+            BuildingsManagerInstance = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
+            BuildingsManagerInstance.Initialize("Buildings");
         }
     }
 }
