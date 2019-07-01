@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Managers;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Services
             {
                 for (var z = 0; z < width; z++)
                 {
-                    var instance = GameManager.Instance.BuildingsFactory.Create();
+                    var instance = GameManager.Instance.BuildingsFactory.Create(x, z);
                     instance.transform.parent = GameManager.Instance.GameObjectsManager.gameObject.transform;
 
                     var spawnPositionX = x;

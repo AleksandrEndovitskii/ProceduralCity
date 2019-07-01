@@ -9,16 +9,30 @@ namespace Factories
     {
         private List<GameObject> _prefabs = new List<GameObject>();
 
-        private static System.Random _random = new System.Random();
-
         public void Initialize()
         {
             _prefabs = GameManager.Instance.BuildingsManager.GetAll().ToList().ConvertAll(x => (GameObject)x);
         }
 
-        public GameObject Create()
+        public GameObject Create(int x, int z)
         {
-            var randomPrefab = _prefabs[_random.Next(0, _prefabs.Count)];
+            var noiseUpperBound = _prefabs.Count * 2;
+
+            var noise = (int) (Mathf.PerlinNoise(
+                                   z / (float) noiseUpperBound,
+                                   x / (float) noiseUpperBound)
+                               * noiseUpperBound);
+
+            GameObject randomPrefab = null;
+
+            for (var i = _prefabs.Count - 1; i >= 0; i--)
+            {
+                if (noise <= (i + 1) * 2)
+                {
+                    randomPrefab = _prefabs[i];
+                }
+            }
+
             var instance = GameObject.Instantiate(randomPrefab);
 
             return instance;
