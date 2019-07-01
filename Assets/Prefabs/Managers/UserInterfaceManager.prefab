@@ -43,3 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5aef82bcd664d4495e7cea43e041cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _windowsCanvasPrefab: {fileID: 5981529892584091618, guid: fa5d06d0ed725d64ab7cb03fd789b620,
+    type: 3}
+  _counterTMPTextPrefab: {fileID: 8272057044552431467, guid: 351bc44aa0675f54ba19c023248e4084,
+    type: 3}
