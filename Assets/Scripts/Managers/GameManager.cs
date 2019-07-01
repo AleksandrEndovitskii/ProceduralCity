@@ -21,8 +21,9 @@ namespace Managers
         [NonSerialized]
         public BuildingsManager BuildingsManager;
 
+        [NonSerialized]
         public BuildingsFactory BuildingsFactory;
-
+        [NonSerialized]
         public CityBuildingService CityBuildingService;
 
         private void Awake()
@@ -52,9 +53,11 @@ namespace Managers
             BuildingsManager = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
             BuildingsManager.Initialize("Buildings");
 
+            BuildingsFactory = new BuildingsFactory();
             BuildingsFactory.Initialize();
 
             // start point
+            CityBuildingService = new CityBuildingService();
             CityBuildingService.Initialize();
         }
     }
