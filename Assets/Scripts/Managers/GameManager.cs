@@ -1,4 +1,5 @@
 ﻿using System;
+using Factories;
 using Managers.ResourcesManagers;
 using Services;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Managers
 
         [NonSerialized]
         public BuildingsManager BuildingsManager;
+
+        public BuildingsFactory BuildingsFactory;
 
         public CityBuildingService CityBuildingService;
 
@@ -42,6 +45,8 @@ namespace Managers
         {
             BuildingsManager = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
             BuildingsManager.Initialize("Buildings");
+
+            BuildingsFactory.Initialize();
 
             // start point
             CityBuildingService.Initialize();
