@@ -17,6 +17,8 @@ namespace Managers
         private UserInterfaceManager _userInterfaceManagerPrefab;
         [SerializeField]
         private BuildingsManager _buildingsManagerPrefab;
+        [SerializeField]
+        private HumansManager _humansManagerPrefab;
 
         [NonSerialized]
         public GameObjectsManager GameObjectsManager;
@@ -24,8 +26,11 @@ namespace Managers
         public UserInterfaceManager UserInterfaceManager;
         [NonSerialized]
         public BuildingsManager BuildingsManager;
+        [NonSerialized]
+        public HumansManager HumansManager;
 
         public BuildingsFactory BuildingsFactory;
+        public HumansFactory HumansFactory;
         public CityBuildingService CityBuildingService;
 
         private void Awake()
@@ -55,9 +60,13 @@ namespace Managers
             UserInterfaceManager = Instantiate(_userInterfaceManagerPrefab, this.gameObject.transform);
             BuildingsManager = Instantiate(_buildingsManagerPrefab, this.gameObject.transform);
             BuildingsManager.Initialize("Buildings");
+            HumansManager = Instantiate(_humansManagerPrefab, this.gameObject.transform);
+            HumansManager.Initialize("Humans");
 
             BuildingsFactory = new BuildingsFactory();
             BuildingsFactory.Initialize();
+            HumansFactory = new HumansFactory();
+            HumansFactory.Initialize();
 
             CityBuildingService = new CityBuildingService();
             // user interface need spawned buildings from city building service
