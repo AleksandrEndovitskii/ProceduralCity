@@ -17,7 +17,7 @@ namespace Services
         public void Initialize()
         {
             // demo implementation
-            _map = Create(100, 100, 2);
+            _map = Create(100, 100);
 
             for (var x = 0; x < _map.GetLength(0); x++)
             {
@@ -32,12 +32,13 @@ namespace Services
             InstancesCreated.Invoke(_instances);
         }
 
-        public GameObject[,] Create(int length, int width, int spacing)
+        public GameObject[,] Create(int length, int width)
         {
             var map = new GameObject[length, width];
 
             var mapBlueprint = new GameObject[length, width];
 
+            // generating blueprint map
             for (var x = 0; x < length; x++)
             {
                 for (var z = 0; z < width; z++)
@@ -46,10 +47,33 @@ namespace Services
                 }
             }
 
+            // generating spacings in blueprint map
+            for (var x = 1; x < mapBlueprint.GetLength(0); x += 2)
+            {
+                for (var z = 0; z < mapBlueprint.GetLength(1); z += 1)
+                {
+                    mapBlueprint[x, z] = null;
+                }
+            }
+            for (var z = 1; z < mapBlueprint.GetLength(1); z += 2)
+            {
+                for (var x = 0; x < mapBlueprint.GetLength(0); x += 1)
+                {
+                    mapBlueprint[x, z] = null;
+                }
+            }
+
+            // generating map based on map blueprint
             for (var x = 0; x < mapBlueprint.GetLength(0); x++)
             {
                 for (var z = 0; z < mapBlueprint.GetLength(1); z++)
                 {
+                    // its empty cell - nothing to do with it - skip it here
+                    if (mapBlueprint[x, z] == null)
+                    {
+                        continue;
+                    }
+
                     var instance = GameManager.Instance.BuildingsFactory.Create(mapBlueprint[x,z]);
                     instance.transform.parent = GameManager.Instance.GameObjectsManager.gameObject.transform;
 
