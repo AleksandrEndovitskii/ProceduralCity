@@ -14,25 +14,57 @@ namespace Services
 
         private GameObject[,] _map;
 
+        private List<GameObject> MapFreeSpaces
+        {
+            get
+            {
+                var result = new List<GameObject>();
+
+                for (var x = 0; x < _map.GetLength(0); x++)
+                {
+                    for (var z = 0; z < _map.GetLength(1); z++)
+                    {
+                        result.Add(_map[x, z]);
+                    }
+                }
+
+                result = result.Where(x => x == null).ToList();
+
+                return result;
+            }
+        }
+
+        private List<GameObject> MapBusySpaces
+        {
+            get
+            {
+                var result = new List<GameObject>();
+
+                for (var x = 0; x < _map.GetLength(0); x++)
+                {
+                    for (var z = 0; z < _map.GetLength(1); z++)
+                    {
+                        result.Add(_map[x, z]);
+                    }
+                }
+
+                result = result.Where(x => x != null).ToList();
+
+                return result;
+            }
+        }
+
         public void Initialize()
         {
             // demo implementation
             _map = Create(100, 100);
 
-            for (var x = 0; x < _map.GetLength(0); x++)
-            {
-                for (var z = 0; z < _map.GetLength(1); z++)
-                {
-                    _instances.Add(_map[x, z]);
-                }
-            }
-
-            _instances = _instances.Where(x => x != null).ToList();
+            _instances = MapBusySpaces;
 
             InstancesCreated.Invoke(_instances);
         }
 
-        public GameObject[,] Create(int length, int width)
+        private GameObject[,] Create(int length, int width)
         {
             var map = new GameObject[length, width];
 
@@ -79,10 +111,43 @@ namespace Services
 
                     var spawnPositionX = x;
                     var spawnPositionZ = z;
-                    var positionX = spawnPositionX;// * instance.gameObject.transform.lossyScale.x * spacing;
+                    var positionX = spawnPositionX;
                     var positionY = instance.gameObject.transform.lossyScale.y / 2; // height
-                    var positionZ = spawnPositionZ;// * instance.gameObject.transform.lossyScale.z; * spacing;
+                    var positionZ = spawnPositionZ;
                     instance.transform.localPosition = new Vector3(positionX, positionY, positionZ);
+
+                    map[x, z] = instance;
+                }
+            }
+
+            // generating humans on map based on map blueprint
+            for (var x = 0; x < mapBlueprint.GetLength(0); x++)
+            {
+                for (var z = 0; z < mapBlueprint.GetLength(1); z++)
+                {
+                    // its busy cell - nothing to do with it - skip it here
+                    if (mapBlueprint[x, z] != null)
+                    {
+                        continue;
+                    }
+
+                    // TODO: copy/paste from above - refactor this in future
+                    var instance = GameManager.Instance.HumansFactory.Create();
+                    // human was not spawned at all - nothing to do with it - skip it here
+                    if (instance == null)
+                    {
+                        continue;
+                    }
+                    instance.transform.parent = GameManager.Instance.GameObjectsManager.gameObject.transform;
+
+                    var spawnPositionX = x;
+                    var spawnPositionZ = z;
+                    var positionX = spawnPositionX;
+                    var positionY = instance.gameObject.transform.lossyScale.y / 2; // height
+                    var positionZ = spawnPositionZ;
+                    instance.transform.localPosition = new Vector3(positionX, positionY, positionZ);
+
+                    map[x, z] = instance;
                 }
             }
 
