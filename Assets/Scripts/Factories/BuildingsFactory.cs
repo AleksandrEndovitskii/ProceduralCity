@@ -37,5 +37,34 @@ namespace Factories
 
             return instance;
         }
+
+        public GameObject Create(GameObject prefab)
+        {
+            var instance = GameObject.Instantiate(prefab);
+
+            return instance;
+        }
+
+        public GameObject GetPrefab(int x, int z)
+        {
+            var noiseUpperBound = _prefabs.Count * 2;
+
+            var noise = (int)(Mathf.PerlinNoise(
+                                  z / (float)noiseUpperBound,
+                                  x / (float)noiseUpperBound)
+                              * noiseUpperBound);
+
+            GameObject randomPrefab = null;
+
+            for (var i = _prefabs.Count - 1; i >= 0; i--)
+            {
+                if (noise <= (i + 1) * 2)
+                {
+                    randomPrefab = _prefabs[i];
+                }
+            }
+
+            return randomPrefab;
+        }
     }
 }
